@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>灵霍的个人主页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -19,6 +20,245 @@
             height: 100%;
             width: 100%;
         }
+
+        /* ===== 开场动画 ===== */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            background: rgb(150, 210, 80);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+        #splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-bg-glow {
+            position: absolute;
+            width: 700px;
+            height: 500px;
+            background: radial-gradient(ellipse at center,
+                    rgba(0, 255, 255, 0.06) 0%,
+                    rgba(0, 255, 255, 0.02) 40%,
+                    transparent 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: splash-glow-pulse 4s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        @keyframes splash-glow-pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.9);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 1;
+            }
+        }
+
+        .splash-border-wrapper {
+            position: relative;
+            padding: 8px;
+            border-radius: 32px;
+            background: transparent;
+            z-index: 1;
+        }
+
+        .splash-border-svg {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: calc(100% + 16px);
+            height: calc(100% + 16px);
+            border-radius: 36px;
+            overflow: visible;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .splash-border-svg rect {
+            fill: none;
+            stroke: rgb(0, 255, 255);
+            stroke-width: 5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5)) drop-shadow(0 0 60px rgba(0, 255, 255, 0.15));
+            stroke-dasharray: 1200;
+            stroke-dashoffset: 1200;
+            animation: splash-draw-border 2.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+                       splash-border-breathe 3s ease-in-out 2.4s infinite alternate;
+        }
+        @keyframes splash-draw-border {
+            0% {
+                stroke-dashoffset: 1200;
+                filter: drop-shadow(0 0 0px rgba(0, 255, 255, 0));
+            }
+            60% {
+                filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.7)) drop-shadow(0 0 70px rgba(0, 255, 255, 0.25));
+            }
+            100% {
+                stroke-dashoffset: 0;
+                filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5)) drop-shadow(0 0 60px rgba(0, 255, 255, 0.15));
+            }
+        }
+        @keyframes splash-border-breathe {
+            0% {
+                filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.3)) drop-shadow(0 0 30px rgba(0, 255, 255, 0.08));
+                stroke-opacity: 0.7;
+            }
+            100% {
+                filter: drop-shadow(0 0 32px rgba(0, 255, 255, 0.8)) drop-shadow(0 0 80px rgba(0, 255, 255, 0.3));
+                stroke-opacity: 1;
+            }
+        }
+
+        .splash-content {
+            position: relative;
+            z-index: 1;
+            animation: splash-fade-up 1s ease;
+        }
+        @keyframes splash-fade-up {
+            0% {
+                opacity: 0;
+                transform: translateY(36px) scale(0.94);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .splash-glass {
+            background: rgba(10, 30, 60, 0.30);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(0, 255, 255, 0.08);
+            border-radius: 26px;
+            padding: 52px 60px 44px;
+            text-align: center;
+            min-width: 380px;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.25),
+                        inset 0 0 60px rgba(0, 255, 255, 0.02);
+            transition: all 0.5s ease;
+        }
+        .splash-glass:hover {
+            background: rgba(10, 30, 60, 0.38);
+            border-color: rgba(0, 255, 255, 0.14);
+            transform: translateY(-3px);
+            box-shadow: 0 36px 120px rgba(0, 0, 0, 0.30);
+        }
+
+        .splash-icon {
+            font-size: 3rem;
+            color: rgba(0, 255, 255, 0.12);
+            margin-bottom: 16px;
+        }
+        .splash-title {
+            font-family: 'Playfair Display', 'Noto Serif SC', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #ffffff;
+            letter-spacing: 6px;
+            text-shadow: 0 0 60px rgba(0, 255, 255, 0.06);
+        }
+        .splash-sub {
+            font-family: 'Noto Serif SC', 'Playfair Display', serif;
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.20);
+            letter-spacing: 10px;
+            margin-top: 6px;
+            margin-bottom: 30px;
+        }
+        .splash-hint {
+            font-family: 'Noto Serif SC', 'Segoe UI', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.10);
+            letter-spacing: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 12px 40px;
+            border-radius: 40px;
+            display: inline-block;
+            transition: all 0.4s ease;
+            animation: splash-blink 2.4s ease-in-out infinite;
+        }
+        .splash-hint:hover {
+            border-color: rgba(0, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.18);
+            background: rgba(0, 255, 255, 0.02);
+        }
+        @keyframes splash-blink {
+            0%,
+            100% {
+                opacity: 0.1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .splash-ripple {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 255, 255, 0.20);
+            animation: splash-ripple-out 0.9s ease forwards;
+            pointer-events: none;
+            z-index: 20;
+        }
+        @keyframes splash-ripple-out {
+            0% {
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                width: 500px;
+                height: 500px;
+                opacity: 0;
+            }
+        }
+
+        .splash-exit {
+            animation: splash-exit-anim 0.7s ease forwards !important;
+        }
+        @keyframes splash-exit-anim {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.06);
+            }
+        }
+        .splash-bg-exit {
+            animation: splash-bg-fade 0.7s ease forwards !important;
+        }
+        @keyframes splash-bg-fade {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* ===== 个人主页 ===== */
         body {
             font-family: 'Segoe UI', 'PingFang SC', Roboto, sans-serif;
             background-image: url('https://github.com/linhoawa/linho/blob/main/2921e638c1538255ce1d7b8384fca8a6.jpg?raw=true');
@@ -30,6 +270,7 @@
             align-items: flex-start;
             padding: 0;
         }
+
         .container {
             position: relative;
             z-index: 1;
@@ -38,6 +279,7 @@
             display: flex;
             align-items: stretch;
         }
+
         .left-card {
             width: 260px;
             flex-shrink: 0;
@@ -104,6 +346,7 @@
             background: rgba(255, 255, 255, 0.04);
             transform: scale(1.08);
         }
+
         .right-content {
             flex: 1;
             background: rgba(105, 105, 105, 0.2);
@@ -333,7 +576,6 @@
             border-color: #ffffff;
         }
 
-        /* ===== 🎵 音乐卡片 ===== */
         .music-card {
             flex: 1;
             background: rgba(105, 105, 105, 0.25);
@@ -346,6 +588,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             transition: all 0.4s ease;
             min-height: 160px;
             position: relative;
@@ -368,48 +611,19 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
         }
 
-        .music-cover-wrap {
-            position: relative;
-            margin-bottom: 12px;
+        .music-icon {
+            font-size: 2.4rem;
+            color: rgba(255, 255, 255, 0.25);
+            margin-bottom: 10px;
+            animation: music-float 3s ease-in-out infinite;
         }
-        .music-cover {
-            width: 72px;
-            height: 72px;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-            flex-shrink: 0;
-            transition: transform 0.4s ease;
-        }
-        .music-card:hover .music-cover {
-            transform: scale(1.02);
-        }
-        .music-cover img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .music-playing-dot {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 18px;
-            height: 18px;
-            background: #4ade80;
-            border-radius: 50%;
-            border: 2px solid rgba(105, 105, 105, 0.4);
-            animation: pulse-dot 1.5s ease-in-out infinite;
-        }
-        @keyframes pulse-dot {
+        @keyframes music-float {
             0%,
             100% {
-                opacity: 1;
-                transform: scale(1);
+                transform: translateY(0);
             }
             50% {
-                opacity: 0.5;
-                transform: scale(0.85);
+                transform: translateY(-6px);
             }
         }
 
@@ -434,7 +648,6 @@
             margin-top: 2px;
             letter-spacing: 0.5px;
         }
-
         .music-controls {
             display: flex;
             align-items: center;
@@ -475,7 +688,6 @@
             transform: scale(1.08);
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
         }
-
         .music-status-text {
             font-size: 0.55rem;
             color: rgba(255, 255, 255, 0.2);
@@ -513,25 +725,6 @@
             .music-card {
                 min-height: 120px;
                 padding: 16px;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 8px;
-            }
-            .music-cover {
-                width: 56px;
-                height: 56px;
-            }
-            .music-playing-dot {
-                width: 14px;
-                height: 14px;
-                bottom: -1px;
-                right: -1px;
-            }
-            .music-controls .play-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
             }
             .profile-wrapper {
                 flex: none;
@@ -563,10 +756,54 @@
             .time-display {
                 font-size: 1.8rem;
             }
+            .splash-glass {
+                padding: 36px 28px 32px;
+                min-width: auto;
+                width: 90vw;
+            }
+            .splash-title {
+                font-size: 2.2rem;
+                letter-spacing: 4px;
+            }
+            .splash-icon {
+                font-size: 2.4rem;
+            }
+            .splash-border-svg rect {
+                stroke-width: 3.5;
+            }
+            .splash-sub {
+                letter-spacing: 6px;
+                font-size: 0.7rem;
+            }
+            .splash-hint {
+                letter-spacing: 4px;
+                padding: 10px 28px;
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- ===== 开场动画 ===== -->
+    <div id="splash-screen">
+        <div class="splash-bg-glow"></div>
+        <div class="splash-border-wrapper" id="splashBorderWrapper">
+            <svg class="splash-border-svg" viewBox="0 0 440 360" preserveAspectRatio="none">
+                <rect x="8" y="8" width="424" height="344" rx="26" ry="26" />
+            </svg>
+            <div class="splash-content" id="splashContent">
+                <div class="splash-glass">
+                    <div class="splash-icon"><i class="fas fa-compact-disc"></i></div>
+                    <div class="splash-title">灵 霍</div>
+                    <div class="splash-sub">✦ 个 人 空 间 ✦</div>
+                    <div class="splash-hint">✦ 点 击 进 入 ✦</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 个人主页 ===== -->
     <div class="container">
         <aside class="left-card">
             <div class="left-top">
@@ -587,7 +824,7 @@
                 <div class="search-container">
                     <div class="search-box">
                         <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="searchInput" class="search-input" placeholder="输入网址或搜索内容..." autofocus onkeydown="if(event.key==='Enter')handleSearch()" />
+                        <input type="text" id="searchInput" class="search-input" placeholder="输入网址或搜索内容..." onkeydown="if(event.key==='Enter')handleSearch()" />
                         <button class="search-btn" onclick="handleSearch()">
                             <i class="fas fa-arrow-right"></i>
                         </button>
@@ -622,10 +859,9 @@
                     </div>
                 </div>
 
-                <!-- 🎵 音乐卡片 -->
                 <div class="music-card">
-                    <div class="music-cover-wrap">
-                        <div class="music-playing-dot"></div>
+                    <div class="music-icon">
+                        <i class="fas fa-music"></i>
                     </div>
                     <div class="music-info">
                         <div class="music-title">猫的舞步</div>
@@ -633,20 +869,70 @@
                     </div>
                     <div class="music-controls">
                         <button onclick="togglePlay()" class="play-btn" id="playBtn">
-                            <i class="fas fa-pause" id="playIcon"></i>
+                            <i class="fas fa-play" id="playIcon"></i>
                         </button>
                     </div>
-                    <div class="music-status-text" id="musicStatus">● 播放中 · 循环</div>
+                    <div class="music-status-text" id="musicStatus">⏸ 等待播放</div>
                 </div>
             </div>
         </main>
     </div>
 
-    <audio id="bgMusic" loop autoplay>
+    <!-- ===== 音频 ===== -->
+    <audio id="bgMusic" preload="auto" loop>
         <source src="https://github.com/linhoawa/linho/raw/refs/heads/main/Candy_Wind%20-%20%E7%8C%AB%E7%9A%84%E8%88%9E%E6%AD%A5.mp3" type="audio/mpeg">
     </audio>
 
     <script>
+        // ===== 元素 =====
+        const splashScreen = document.getElementById('splash-screen');
+        const splashContent = document.getElementById('splashContent');
+        const splashBorderWrapper = document.getElementById('splashBorderWrapper');
+        const splashBgGlow = document.querySelector('.splash-bg-glow');
+        const audio = document.getElementById('bgMusic');
+        const playIcon = document.getElementById('playIcon');
+        const musicStatus = document.getElementById('musicStatus');
+        let musicStarted = false;
+
+        // ===== 开场点击 =====
+        splashScreen.addEventListener('click', function(e) {
+            // 涟漪
+            const rect = splashContent.getBoundingClientRect();
+            const ripple = document.createElement('div');
+            ripple.className = 'splash-ripple';
+            const x = (e.clientX || e.touches?.[0]?.clientX || window.innerWidth / 2) - rect.left;
+            const y = (e.clientY || e.touches?.[0]?.clientY || window.innerHeight / 2) - rect.top;
+            ripple.style.left = (x - 250) + 'px';
+            ripple.style.top = (y - 250) + 'px';
+            splashContent.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 900);
+
+            // 淡出开场
+            splashContent.classList.add('splash-exit');
+            splashBorderWrapper.classList.add('splash-bg-exit');
+            if (splashBgGlow) splashBgGlow.classList.add('splash-bg-exit');
+
+            // 播放音乐
+            if (!musicStarted) {
+                audio.currentTime = 0;
+                audio.play().then(() => {
+                    musicStarted = true;
+                    playIcon.className = 'fas fa-pause';
+                    musicStatus.textContent = '● 播放中 · 循环';
+                }).catch(() => {
+                    // 被阻止时静音重试
+                    audio.muted = true;
+                    audio.play();
+                });
+            }
+
+            // 隐藏开场
+            setTimeout(() => {
+                splashScreen.classList.add('hidden');
+            }, 800);
+        });
+
+        // ===== 时钟 =====
         function updateClock() {
             const now = new Date();
             document.getElementById('timeDisplay').textContent =
@@ -661,6 +947,7 @@
         updateClock();
         setInterval(updateClock, 1000);
 
+        // ===== 搜索 =====
         function handleSearch() {
             const input = document.getElementById('searchInput');
             const query = input.value.trim();
@@ -675,39 +962,42 @@
             }
         }
 
-        const audio = document.getElementById('bgMusic');
-        const playIcon = document.getElementById('playIcon');
-        const musicStatus = document.getElementById('musicStatus');
-        let isPlaying = true;
+        // ===== 音乐控制 =====
+        let isPlaying = false;
 
-        audio.play().catch(() => {
+        audio.addEventListener('play', function() {
+            isPlaying = true;
+            playIcon.className = 'fas fa-pause';
+            musicStatus.textContent = '● 播放中 · 循环';
+        });
+        audio.addEventListener('pause', function() {
             isPlaying = false;
             playIcon.className = 'fas fa-play';
             musicStatus.textContent = '⏸ 已暂停 · 循环';
-            document.querySelector('.music-playing-dot').style.display = 'none';
         });
-
-        function togglePlay() {
-            if (isPlaying) {
-                audio.pause();
-                playIcon.className = 'fas fa-play';
-                musicStatus.textContent = '⏸ 已暂停 · 循环';
-                document.querySelector('.music-playing-dot').style.display = 'none';
-            } else {
-                audio.play();
-                playIcon.className = 'fas fa-pause';
-                musicStatus.textContent = '● 播放中 · 循环';
-                document.querySelector('.music-playing-dot').style.display = 'block';
-            }
-            isPlaying = !isPlaying;
-        }
-
         audio.addEventListener('ended', function() {
             if (isPlaying) {
                 this.currentTime = 0;
                 this.play();
             }
         });
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+
+        // ===== 如果用户很久没点击开场，让音乐静音播放 =====
+        setTimeout(() => {
+            if (!musicStarted) {
+                audio.muted = true;
+                audio.currentTime = 0;
+                audio.play().catch(() => {});
+            }
+        }, 5000);
     </script>
 </body>
 </html>
