@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>灵霍的个人主页</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- ===== 国内 CDN ===== -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.cn/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Noto+Serif+SC:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.cn/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
     <style>
+        /* ===== 重置 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -29,24 +31,18 @@
             width: 100vw;
             height: 100vh;
             z-index: 9999;
-            background-image: url('https://github.com/linhoawa/linho/blob/main/2921e638c1538255ce1d7b8384fca8a6.jpg?raw=true');
-            background-size: cover;
-            background-position: center;
+            background: url('https://s41.ax1x.com/2026/08/19/pmvLb01.jpg') center/cover no-repeat;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
             cursor: pointer;
-            user-select: none;
+            transition: opacity .8s ease, visibility .8s ease;
         }
         #splash-screen::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.35);
+            inset: 0;
+            background: rgba(0, 0, 0, .35);
             z-index: 0;
         }
         #splash-screen.hidden {
@@ -55,26 +51,24 @@
             pointer-events: none;
         }
 
+        /* 光晕 */
         .splash-bg-glow {
             position: absolute;
             width: 700px;
             height: 500px;
-            background: radial-gradient(ellipse at center,
-                    rgba(0, 255, 255, 0.08) 0%,
-                    rgba(0, 255, 255, 0.03) 40%,
-                    transparent 70%);
-            border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            animation: splash-glow-pulse 4s ease-in-out infinite alternate;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 255, .08), rgba(0, 255, 255, .02) 40%, transparent 70%);
+            border-radius: 50%;
+            animation: glow-pulse 4s ease-in-out infinite alternate;
             pointer-events: none;
             z-index: 0;
         }
-        @keyframes splash-glow-pulse {
+        @keyframes glow-pulse {
             0% {
-                transform: translate(-50%, -50%) scale(0.9);
-                opacity: 0.4;
+                transform: translate(-50%, -50%) scale(.9);
+                opacity: .4;
             }
             100% {
                 transform: translate(-50%, -50%) scale(1.3);
@@ -90,144 +84,92 @@
             align-items: center;
         }
 
-        /* ===== 全新美化边框 ===== */
+        /* 边框 */
         .splash-border-wrapper {
             position: relative;
             display: inline-block;
             padding: 4px;
             border-radius: 32px;
-            background: linear-gradient(135deg, 
-                rgba(0, 255, 255, 0.6) 0%, 
-                rgba(0, 255, 255, 0.15) 30%,
-                rgba(0, 255, 255, 0.05) 50%,
-                rgba(0, 255, 255, 0.15) 70%,
-                rgba(0, 255, 255, 0.6) 100%
-            );
+            background: linear-gradient(135deg, rgba(0, 255, 255, .6), rgba(0, 255, 255, .15) 30%, rgba(0, 255, 255, .05) 50%, rgba(0, 255, 255, .15) 70%, rgba(0, 255, 255, .6));
             animation: border-rotate 6s linear infinite;
-            box-shadow: 
-                0 0 40px rgba(0, 255, 255, 0.15),
-                0 0 80px rgba(0, 255, 255, 0.08),
-                inset 0 0 40px rgba(0, 255, 255, 0.05);
+            box-shadow: 0 0 40px rgba(0, 255, 255, .15), 0 0 80px rgba(0, 255, 255, .08), inset 0 0 40px rgba(0, 255, 255, .05);
         }
         @keyframes border-rotate {
-            0% {
-                background: linear-gradient(135deg, 
-                    rgba(0, 255, 255, 0.6) 0%, 
-                    rgba(0, 255, 255, 0.15) 30%,
-                    rgba(0, 255, 255, 0.05) 50%,
-                    rgba(0, 255, 255, 0.15) 70%,
-                    rgba(0, 255, 255, 0.6) 100%
-                );
+            0%,
+            100% {
+                background: linear-gradient(135deg, rgba(0, 255, 255, .6), rgba(0, 255, 255, .15) 30%, rgba(0, 255, 255, .05) 50%, rgba(0, 255, 255, .15) 70%, rgba(0, 255, 255, .6));
             }
             25% {
-                background: linear-gradient(225deg, 
-                    rgba(0, 255, 255, 0.6) 0%, 
-                    rgba(0, 255, 255, 0.15) 30%,
-                    rgba(0, 255, 255, 0.05) 50%,
-                    rgba(0, 255, 255, 0.15) 70%,
-                    rgba(0, 255, 255, 0.6) 100%
-                );
+                background: linear-gradient(225deg, rgba(0, 255, 255, .6), rgba(0, 255, 255, .15) 30%, rgba(0, 255, 255, .05) 50%, rgba(0, 255, 255, .15) 70%, rgba(0, 255, 255, .6));
             }
             50% {
-                background: linear-gradient(315deg, 
-                    rgba(0, 255, 255, 0.6) 0%, 
-                    rgba(0, 255, 255, 0.15) 30%,
-                    rgba(0, 255, 255, 0.05) 50%,
-                    rgba(0, 255, 255, 0.15) 70%,
-                    rgba(0, 255, 255, 0.6) 100%
-                );
+                background: linear-gradient(315deg, rgba(0, 255, 255, .6), rgba(0, 255, 255, .15) 30%, rgba(0, 255, 255, .05) 50%, rgba(0, 255, 255, .15) 70%, rgba(0, 255, 255, .6));
             }
             75% {
-                background: linear-gradient(45deg, 
-                    rgba(0, 255, 255, 0.6) 0%, 
-                    rgba(0, 255, 255, 0.15) 30%,
-                    rgba(0, 255, 255, 0.05) 50%,
-                    rgba(0, 255, 255, 0.15) 70%,
-                    rgba(0, 255, 255, 0.6) 100%
-                );
-            }
-            100% {
-                background: linear-gradient(135deg, 
-                    rgba(0, 255, 255, 0.6) 0%, 
-                    rgba(0, 255, 255, 0.15) 30%,
-                    rgba(0, 255, 255, 0.05) 50%,
-                    rgba(0, 255, 255, 0.15) 70%,
-                    rgba(0, 255, 255, 0.6) 100%
-                );
+                background: linear-gradient(45deg, rgba(0, 255, 255, .6), rgba(0, 255, 255, .15) 30%, rgba(0, 255, 255, .05) 50%, rgba(0, 255, 255, .15) 70%, rgba(0, 255, 255, .6));
             }
         }
 
-        /* 内层发光边框 */
+        /* 旋转光效 */
         .splash-border-wrapper::before {
             content: '';
             position: absolute;
             inset: -2px;
             border-radius: 34px;
             padding: 2px;
-            background: conic-gradient(
-                from 0deg,
-                transparent 0deg,
-                rgba(0, 255, 255, 0.3) 30deg,
-                rgba(0, 255, 255, 0.8) 60deg,
-                rgba(0, 255, 255, 0.3) 90deg,
-                transparent 120deg,
-                transparent 240deg,
-                rgba(0, 255, 255, 0.3) 270deg,
-                rgba(0, 255, 255, 0.8) 300deg,
-                rgba(0, 255, 255, 0.3) 330deg,
-                transparent 360deg
-            );
+            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 255, .3) 30deg, rgba(0, 255, 255, .8) 60deg, rgba(0, 255, 255, .3) 90deg, transparent 120deg, transparent 240deg, rgba(0, 255, 255, .3) 270deg, rgba(0, 255, 255, .8) 300deg, rgba(0, 255, 255, .3) 330deg, transparent);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             animation: spin-border 4s linear infinite;
-            opacity: 0.6;
+            opacity: .6;
             pointer-events: none;
         }
         @keyframes spin-border {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
-        /* 外发光光晕 */
+        /* 外发光 */
         .splash-border-wrapper::after {
             content: '';
             position: absolute;
             inset: -20px;
             border-radius: 50px;
-            background: radial-gradient(ellipse at center, 
-                rgba(0, 255, 255, 0.06) 0%, 
-                transparent 70%
-            );
-            animation: glow-pulse 2.5s ease-in-out infinite alternate;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 255, .06), transparent 70%);
+            animation: outer-glow 2.5s ease-in-out infinite alternate;
             pointer-events: none;
             z-index: -1;
         }
-        @keyframes glow-pulse {
+        @keyframes outer-glow {
             0% {
-                transform: scale(0.95);
-                opacity: 0.3;
+                transform: scale(.95);
+                opacity: .3;
             }
             100% {
                 transform: scale(1.1);
-                opacity: 0.8;
+                opacity: .8;
             }
         }
 
         .splash-content {
             position: relative;
             z-index: 1;
-            animation: splash-fade-up 1s ease;
             border-radius: 28px;
-            background: rgba(10, 30, 60, 0.35);
+            background: rgba(10, 30, 60, .35);
             backdrop-filter: blur(32px);
             -webkit-backdrop-filter: blur(32px);
             overflow: hidden;
+            animation: splash-fade-up 1s ease;
         }
         @keyframes splash-fade-up {
             0% {
                 opacity: 0;
-                transform: translateY(36px) scale(0.94);
+                transform: translateY(36px) scale(.94);
             }
             100% {
                 opacity: 1;
@@ -242,7 +184,6 @@
             position: relative;
             background: transparent;
         }
-        /* 内部微光纹理 */
         .splash-glass::before {
             content: '';
             position: absolute;
@@ -250,28 +191,25 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 30% 20%, 
-                rgba(0, 255, 255, 0.03), 
-                transparent 60%
-            );
+            background: radial-gradient(circle at 30% 20%, rgba(0, 255, 255, .03), transparent 60%);
             pointer-events: none;
         }
 
         .splash-icon {
             font-size: 3rem;
-            color: rgba(0, 255, 255, 0.25);
+            color: rgba(0, 255, 255, .25);
             margin-bottom: 16px;
             animation: icon-pulse 2.5s ease-in-out infinite;
-            position: relative;
         }
         @keyframes icon-pulse {
-            0%, 100% {
+            0%,
+            100% {
                 transform: scale(1);
-                color: rgba(0, 255, 255, 0.2);
+                color: rgba(0, 255, 255, .2);
             }
             50% {
                 transform: scale(1.05);
-                color: rgba(0, 255, 255, 0.4);
+                color: rgba(0, 255, 255, .4);
             }
         }
 
@@ -280,77 +218,70 @@
             font-size: 3rem;
             font-weight: 400;
             font-style: italic;
-            color: #ffffff;
+            color: #fff;
             letter-spacing: 6px;
-            text-shadow: 0 0 60px rgba(0, 255, 255, 0.08);
-            position: relative;
+            text-shadow: 0 0 60px rgba(0, 255, 255, .08);
         }
-        /* 标题下装饰线 */
         .splash-title::after {
             content: '';
             display: block;
             width: 60px;
             height: 2px;
             margin: 12px auto 0;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(0, 255, 255, 0.4), 
-                transparent
-            );
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, .4), transparent);
             border-radius: 2px;
         }
 
         .splash-sub {
             font-family: 'Noto Serif SC', 'Playfair Display', serif;
-            font-size: 0.85rem;
+            font-size: .85rem;
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, .2);
             letter-spacing: 10px;
             margin-top: 16px;
             margin-bottom: 30px;
-            position: relative;
         }
 
         .splash-hint {
             font-family: 'Noto Serif SC', 'Segoe UI', sans-serif;
-            font-size: 0.75rem;
+            font-size: .75rem;
             font-weight: 300;
-            color: rgba(0, 255, 255, 0.25);
+            color: rgba(0, 255, 255, .25);
             letter-spacing: 6px;
-            border: 1px solid rgba(0, 255, 255, 0.08);
+            border: 1px solid rgba(0, 255, 255, .08);
             padding: 12px 40px;
             border-radius: 40px;
             display: inline-block;
-            transition: all 0.4s ease;
-            animation: splash-blink 2.4s ease-in-out infinite;
-            background: rgba(0, 255, 255, 0.02);
-            position: relative;
+            background: rgba(0, 255, 255, .02);
+            transition: all .4s ease;
+            animation: blink 2.4s ease-in-out infinite;
         }
         .splash-hint:hover {
-            border-color: rgba(0, 255, 255, 0.2);
-            color: rgba(0, 255, 255, 0.4);
-            background: rgba(0, 255, 255, 0.04);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.05);
+            border-color: rgba(0, 255, 255, .2);
+            color: rgba(0, 255, 255, .4);
+            background: rgba(0, 255, 255, .04);
+            box-shadow: 0 0 30px rgba(0, 255, 255, .05);
             transform: scale(1.02);
         }
-        @keyframes splash-blink {
-            0%, 100% {
-                opacity: 0.2;
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: .2;
             }
             50% {
-                opacity: 0.6;
+                opacity: .6;
             }
         }
 
         .splash-ripple {
             position: absolute;
             border-radius: 50%;
-            border: 2px solid rgba(0, 255, 255, 0.25);
-            animation: splash-ripple-out 0.9s ease forwards;
+            border: 2px solid rgba(0, 255, 255, .25);
+            animation: ripple-out .9s ease forwards;
             pointer-events: none;
             z-index: 20;
         }
-        @keyframes splash-ripple-out {
+        @keyframes ripple-out {
             0% {
                 width: 0;
                 height: 0;
@@ -364,9 +295,9 @@
         }
 
         .splash-exit {
-            animation: splash-exit-anim 0.7s ease forwards !important;
+            animation: exit .7s ease forwards !important;
         }
-        @keyframes splash-exit-anim {
+        @keyframes exit {
             0% {
                 opacity: 1;
                 transform: scale(1);
@@ -377,24 +308,25 @@
             }
         }
         .splash-bg-exit {
-            animation: splash-bg-fade 0.7s ease forwards !important;
+            animation: fade-out .7s ease forwards !important;
         }
-        @keyframes splash-bg-fade {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
+        @keyframes fade-out {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
         }
 
         /* ===== 个人主页 ===== */
         body {
             font-family: 'Segoe UI', 'PingFang SC', Roboto, sans-serif;
-            background-image: url('https://github.com/linhoawa/linho/blob/main/2921e638c1538255ce1d7b8384fca8a6.jpg?raw=true');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: url('https://s41.ax1x.com/2026/08/19/pmvLb01.jpg') center/cover fixed no-repeat;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 0;
+            min-height: 100vh;
         }
 
         .container {
@@ -406,20 +338,16 @@
             align-items: stretch;
         }
 
+        /* ===== 左侧栏 ===== */
         .left-card {
             width: 260px;
             flex-shrink: 0;
-            background: rgba(105, 105, 105, 0.2);
+            background: rgba(105, 105, 105, .2);
             padding: 40px 24px 30px;
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-        }
-        .left-top {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         .avatar {
             width: 120px;
@@ -427,36 +355,30 @@
             border-radius: 50%;
             object-fit: cover;
             margin: 0 auto 18px;
-            display: block;
-            border: 3px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 0);
+            border: 3px solid rgba(255, 255, 255, .4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
         }
         .name {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-            line-height: 1.3;
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, .3);
         }
         .bio {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.85);
-            margin: 6px 0 0;
-            line-height: 1.5;
-            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+            font-size: .95rem;
+            color: rgba(255, 255, 255, .85);
+            margin-top: 6px;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, .25);
         }
         .socials {
             display: flex;
             justify-content: center;
             gap: 12px;
-            flex-wrap: wrap;
             padding-top: 20px;
         }
         .socials a {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, .7);
             font-size: 1.3rem;
-            background: rgba(255, 255, 255, 0);
             width: 46px;
             height: 46px;
             border-radius: 30px;
@@ -464,18 +386,19 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            transition: all 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, .1);
+            transition: all .25s ease;
         }
         .socials a:hover {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            background: rgba(255, 255, 255, .04);
             transform: scale(1.08);
         }
 
+        /* ===== 右侧主内容 ===== */
         .right-content {
             flex: 1;
-            background: rgba(105, 105, 105, 0.2);
+            background: rgba(105, 105, 105, .2);
             padding: 40px 40px 30px;
             display: flex;
             flex-direction: column;
@@ -485,33 +408,32 @@
             font-family: 'JetBrains Mono', 'Fira Code', monospace;
             font-size: 2.8rem;
             font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+            color: #fff;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, .5);
             margin-bottom: 20px;
-            letter-spacing: 0.5px;
-            line-height: 1.2;
         }
 
-        .row-1 {
-            width: 100%;
-            display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
-            align-items: stretch;
-        }
+        .row-1,
         .row-2 {
             width: 100%;
             display: flex;
             gap: 16px;
+        }
+        .row-1 {
+            margin-bottom: 16px;
+            align-items: stretch;
+        }
+        .row-2 {
             align-items: flex-start;
         }
 
+        /* ===== 搜索框 ===== */
         .search-container {
             flex: 2;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            background: rgba(105, 105, 105, 0.2);
+            background: rgba(105, 105, 105, .2);
             border-radius: 16px;
             padding: 16px 20px;
             min-height: 100px;
@@ -519,64 +441,57 @@
         .search-box {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .1);
             border-radius: 40px;
             padding: 4px 4px 4px 20px;
-            transition: all 0.3s ease;
+            transition: all .3s ease;
         }
         .search-box:focus-within {
-            background: rgba(255, 255, 255, 0.10);
-            border-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, .1);
+            border-color: rgba(255, 255, 255, .25);
+            box-shadow: 0 0 20px rgba(255, 255, 255, .04);
         }
         .search-icon {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9rem;
+            color: rgba(255, 255, 255, .5);
+            font-size: .9rem;
             margin-right: 12px;
-            flex-shrink: 0;
         }
         .search-input {
             flex: 1;
             background: transparent;
             border: none;
             outline: none;
-            color: #ffffff;
-            font-size: 0.95rem;
+            color: #fff;
+            font-size: .95rem;
             padding: 10px 0;
-            min-width: 0;
             font-family: inherit;
         }
         .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, .5);
         }
         .search-btn {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, .08);
             border: none;
             border-radius: 40px;
-            color: #ffffff;
+            color: #fff;
             width: 38px;
             height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all .2s ease;
             flex-shrink: 0;
         }
         .search-btn:hover {
-            background: rgba(255, 255, 255, 0.16);
-        }
-        .search-hint {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.65);
-            margin-top: 6px;
-            padding-left: 4px;
+            background: rgba(255, 255, 255, .16);
         }
 
+        /* ===== 时钟 ===== */
         .time-widget {
             flex: 1;
-            background: rgba(105, 105, 105, 0.2);
+            background: rgba(105, 105, 105, .2);
             border-radius: 16px;
             padding: 16px 20px;
             text-align: center;
@@ -585,24 +500,23 @@
             justify-content: center;
             align-items: center;
             min-height: 100px;
-            box-sizing: border-box;
         }
         .time-display {
             font-size: 2.2rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #fff;
             font-variant-numeric: tabular-nums;
             letter-spacing: 2px;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-            line-height: 1.2;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, .25);
         }
         .date-display {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: .8rem;
+            color: rgba(255, 255, 255, .6);
             margin-top: 4px;
             letter-spacing: 1px;
         }
 
+        /* ===== 个人资料卡 ===== */
         .profile-wrapper {
             flex: 2;
             display: flex;
@@ -612,10 +526,10 @@
             width: 100%;
             max-width: 500px;
             border-radius: 12px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
             overflow: hidden;
-            background: rgba(105, 105, 105, 0.4);
-            transition: transform 0.3s ease;
+            background: rgba(105, 105, 105, .4);
+            box-shadow: 0 0 30px rgba(0, 0, 0, .15);
+            transition: transform .3s ease;
         }
         .profile-card:hover {
             transform: translateY(-4px);
@@ -624,8 +538,6 @@
             width: 100%;
             height: 140px;
             overflow: hidden;
-            background: transparent;
-            border-radius: 12px 12px 0 0;
         }
         .profile-banner img {
             width: 100%;
@@ -643,10 +555,10 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.4);
+            border: 4px solid rgba(255, 255, 255, .4);
             overflow: hidden;
-            background: rgba(105, 105, 105, 0.4);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            background: rgba(105, 105, 105, .4);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
         }
         .profile-avatar img {
             width: 100%;
@@ -655,123 +567,96 @@
             display: block;
         }
         .profile-info {
-            background: transparent;
             text-align: center;
             padding: 16px 24px 4px;
         }
         .profile-name {
             font-size: 18px;
             font-weight: 600;
-            color: #ffffff;
-            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, .3);
         }
         .profile-role {
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, .6);
             margin-top: 2px;
         }
         .profile-about {
             margin: 12px 0 16px;
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, .85);
             font-size: 14px;
             line-height: 1.6;
-            word-wrap: break-word;
-            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 1px 6px rgba(0, 0, 0, .2);
         }
         .profile-footer {
             display: flex;
             align-items: center;
             justify-content: center;
             height: 44px;
-            background: rgba(105, 105, 105, 0.1);
-            color: rgba(255, 255, 255, 0.8);
+            background: rgba(105, 105, 105, .1);
+            color: rgba(255, 255, 255, .8);
             font-size: 13px;
-            padding: 0 20px;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 0 0 12px 12px;
-        }
-        .profile-footer a {
-            color: #ffffff;
-            font-weight: 600;
-            text-decoration: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            transition: border-color 0.2s;
-        }
-        .profile-footer a:hover {
-            border-color: #ffffff;
+            border-top: 1px solid rgba(255, 255, 255, .06);
         }
 
+        /* ===== 音乐卡片 ===== */
         .music-card {
             flex: 1;
-            background: rgba(105, 105, 105, 0.25);
+            background: rgba(105, 105, 105, .25);
             border-radius: 20px;
             padding: 20px 16px 18px;
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            border: 1px solid rgba(255, 255, 255, .08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .12);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.4s ease;
+            transition: all .4s ease;
             min-height: 160px;
             position: relative;
             overflow: hidden;
         }
-        .music-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.03), transparent 60%);
-            pointer-events: none;
-        }
         .music-card:hover {
-            background: rgba(105, 105, 105, 0.35);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(105, 105, 105, .35);
+            border-color: rgba(255, 255, 255, .15);
             transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .18);
         }
-
         .music-icon {
             font-size: 2.4rem;
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, .25);
             margin-bottom: 10px;
-            animation: music-float 3s ease-in-out infinite;
+            animation: float 3s ease-in-out infinite;
         }
-        @keyframes music-float {
-            0%, 100% {
+        @keyframes float {
+            0%,
+            100% {
                 transform: translateY(0);
             }
             50% {
                 transform: translateY(-6px);
             }
         }
-
         .music-info {
             width: 100%;
             text-align: center;
             margin-bottom: 12px;
         }
         .music-title {
-            font-size: 0.95rem;
+            font-size: .95rem;
             font-weight: 600;
-            color: #ffffff;
-            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+            color: #fff;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, .3);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            letter-spacing: 0.3px;
         }
         .music-artist {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.4);
+            font-size: .7rem;
+            color: rgba(255, 255, 255, .4);
             margin-top: 2px;
-            letter-spacing: 0.5px;
         }
         .music-controls {
             display: flex;
@@ -779,58 +664,56 @@
             gap: 16px;
         }
         .music-controls button {
-            background: rgba(255, 255, 255, 0.06);
-            border: none;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .04);
             border-radius: 50%;
             width: 38px;
             height: 38px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.85rem;
+            color: rgba(255, 255, 255, .7);
+            font-size: .85rem;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all .25s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
         }
         .music-controls button:hover {
-            background: rgba(255, 255, 255, 0.14);
-            color: #ffffff;
+            background: rgba(255, 255, 255, .14);
+            color: #fff;
             transform: scale(1.06);
         }
         .music-controls .play-btn {
             width: 48px;
             height: 48px;
             font-size: 1.2rem;
-            background: rgba(255, 255, 255, 0.10);
-            border-color: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, .1);
+            border-color: rgba(255, 255, 255, .08);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .15);
         }
         .music-controls .play-btn:hover {
-            background: rgba(255, 255, 255, 0.20);
+            background: rgba(255, 255, 255, .2);
             transform: scale(1.08);
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, .2);
         }
         .music-status-text {
-            font-size: 0.55rem;
-            color: rgba(255, 255, 255, 0.2);
+            font-size: .55rem;
+            color: rgba(255, 255, 255, .2);
             margin-top: 8px;
-            letter-spacing: 0.8px;
+            letter-spacing: .8px;
             text-transform: uppercase;
             font-weight: 300;
         }
 
+        /* ===== 响应式 ===== */
         @media (max-width: 700px) {
             .container {
                 flex-direction: column;
-                min-height: 100vh;
             }
             .left-card {
                 width: 100%;
                 padding: 28px 20px;
-                min-height: auto;
             }
             .right-content {
                 padding: 24px 20px;
@@ -895,12 +778,12 @@
             }
             .splash-sub {
                 letter-spacing: 6px;
-                font-size: 0.7rem;
+                font-size: .7rem;
             }
             .splash-hint {
                 letter-spacing: 4px;
                 padding: 10px 28px;
-                font-size: 0.7rem;
+                font-size: .7rem;
             }
             .splash-border-wrapper {
                 padding: 3px;
@@ -929,9 +812,10 @@
 
     <!-- ===== 个人主页 ===== -->
     <div class="container">
+        <!-- 左侧栏 -->
         <aside class="left-card">
             <div class="left-top">
-                <img class="avatar" src="https://github.com/linhoawa/linho/blob/main/504368705d39066dc981544c5dde7529.jpg?raw=true" alt="头像" />
+                <img class="avatar" src="https://s41.ax1x.com/2026/08/19/pmvLqTx.jpg" alt="头像" />
                 <div class="name">灵霍</div>
                 <div class="bio">一个会一点点前端的兽</div>
             </div>
@@ -941,9 +825,12 @@
                 <a href="#"><i class="fab fa-bilibili"></i></a>
             </div>
         </aside>
+
+        <!-- 右侧主内容 -->
         <main class="right-content">
             <div class="hero-title">Hi, I'm linho</div>
 
+            <!-- 第一行：搜索 + 时钟 -->
             <div class="row-1">
                 <div class="search-container">
                     <div class="search-box">
@@ -953,7 +840,6 @@
                             <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
-                    <div class="search-hint"></div>
                 </div>
                 <div class="time-widget">
                     <div class="time-display" id="timeDisplay">--:--:--</div>
@@ -961,15 +847,16 @@
                 </div>
             </div>
 
+            <!-- 第二行：资料卡 + 音乐 -->
             <div class="row-2">
                 <div class="profile-wrapper">
                     <div class="profile-card">
                         <div class="profile-banner">
-                            <img src="https://github.com/linhoawa/linho/blob/main/5d7f28ee1acee065d41a477b3013be86.jpg?raw=true" alt="横幅" />
+                            <img src="https://s41.ax1x.com/2026/08/19/pmvLyOs.jpg" alt="横幅" />
                         </div>
                         <div class="profile-avatar-wrap">
                             <div class="profile-avatar">
-                                <img src="https://github.com/linhoawa/linho/blob/main/504368705d39066dc981544c5dde7529.jpg?raw=true" alt="头像" />
+                                <img src="https://s41.ax1x.com/2026/08/19/pmvLqTx.jpg" alt="头像" />
                             </div>
                         </div>
                         <div class="profile-info">
@@ -984,9 +871,7 @@
                 </div>
 
                 <div class="music-card">
-                    <div class="music-icon">
-                        <i class="fas fa-music"></i>
-                    </div>
+                    <div class="music-icon"><i class="fas fa-music"></i></div>
                     <div class="music-info">
                         <div class="music-title">猫的舞步</div>
                         <div class="music-artist">Candy_Wind</div>
@@ -1004,11 +889,10 @@
 
     <!-- ===== 音频 ===== -->
     <audio id="bgMusic" preload="auto" loop>
-        <source src="https://github.com/linhoawa/linho/raw/refs/heads/main/Candy_Wind%20-%20%E7%8C%AB%E7%9A%84%E8%88%9E%E6%AD%A5.mp3" type="audio/mpeg">
+        <source src="https://cdn.jsdelivr.net/gh/linhoawa/linho@main/Candy_Wind%20-%20%E7%8C%AB%E7%9A%84%E8%88%9E%E6%AD%A5.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        // ===== 元素 =====
         const splashScreen = document.getElementById('splash-screen');
         const splashContent = document.getElementById('splashContent');
         const splashBorderWrapper = document.getElementById('splashBorderWrapper');
@@ -1020,7 +904,7 @@
 
         // ===== 开场点击 =====
         splashScreen.addEventListener('click', function(e) {
-            // 涟漪
+            // 涟漪效果
             const rect = splashContent.getBoundingClientRect();
             const ripple = document.createElement('div');
             ripple.className = 'splash-ripple';
@@ -1031,7 +915,7 @@
             splashContent.appendChild(ripple);
             setTimeout(() => ripple.remove(), 900);
 
-            // 淡出开场
+            // 淡出
             splashContent.classList.add('splash-exit');
             splashBorderWrapper.classList.add('splash-bg-exit');
             if (splashBgGlow) splashBgGlow.classList.add('splash-bg-exit');
@@ -1049,9 +933,7 @@
                 });
             }
 
-            setTimeout(() => {
-                splashScreen.classList.add('hidden');
-            }, 800);
+            setTimeout(() => splashScreen.classList.add('hidden'), 800);
         });
 
         // ===== 时钟 =====
@@ -1075,43 +957,33 @@
             const query = input.value.trim();
             if (!query) return;
             const isUrl = /^https?:\/\//i.test(query) || (/^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(query) && !/\s/.test(query));
-            if (isUrl) {
-                let url = query;
-                if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-                window.location.href = url;
-            } else {
-                window.location.href = 'https://www.baidu.com/s?wd=' + encodeURIComponent(query);
-            }
+            window.location.href = isUrl ?
+                (query.startsWith('http') ? query : 'https://' + query) :
+                'https://www.baidu.com/s?wd=' + encodeURIComponent(query);
         }
 
         // ===== 音乐控制 =====
         let isPlaying = false;
-
-        audio.addEventListener('play', function() {
+        audio.addEventListener('play', () => {
             isPlaying = true;
             playIcon.className = 'fas fa-pause';
             musicStatus.textContent = '● 播放中 · 循环';
         });
-        audio.addEventListener('pause', function() {
+        audio.addEventListener('pause', () => {
             isPlaying = false;
             playIcon.className = 'fas fa-play';
             musicStatus.textContent = '⏸ 已暂停 · 循环';
         });
-        audio.addEventListener('ended', function() {
-            if (isPlaying) {
-                this.currentTime = 0;
-                this.play();
-            }
+        audio.addEventListener('ended', () => {
+            if (isPlaying) { audio.currentTime = 0;
+                audio.play(); }
         });
 
         function togglePlay() {
-            if (audio.paused) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
+            audio.paused ? audio.play() : audio.pause();
         }
 
+        // 5秒后自动静音播放
         setTimeout(() => {
             if (!musicStarted) {
                 audio.muted = true;
