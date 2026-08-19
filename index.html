@@ -887,8 +887,8 @@
         </main>
     </div>
 
-    <!-- ===== 音频 ===== -->
-    <audio id="bgMusic" preload="auto" loop>
+    <!-- ===== 音频（muted 静音启动，点击后取消静音） ===== -->
+    <audio id="bgMusic" preload="auto" loop muted>
         <source src="https://cdn.jsdelivr.net/gh/linhoawa/linho@main/Candy_Wind%20-%20%E7%8C%AB%E7%9A%84%E8%88%9E%E6%AD%A5.mp3" type="audio/mpeg">
     </audio>
 
@@ -920,16 +920,20 @@
             splashBorderWrapper.classList.add('splash-bg-exit');
             if (splashBgGlow) splashBgGlow.classList.add('splash-bg-exit');
 
-            // 播放音乐
+            // ===== 播放音乐（关键修复） =====
             if (!musicStarted) {
+                audio.muted = false; // 取消静音
                 audio.currentTime = 0;
                 audio.play().then(() => {
                     musicStarted = true;
                     playIcon.className = 'fas fa-pause';
                     musicStatus.textContent = '● 播放中 · 循环';
                 }).catch(() => {
+                    // 如果被阻止，静音播放
                     audio.muted = true;
                     audio.play();
+                    // 提示用户点击播放按钮
+                    musicStatus.textContent = '⚠ 点击播放按钮';
                 });
             }
 
@@ -975,15 +979,22 @@
             musicStatus.textContent = '⏸ 已暂停 · 循环';
         });
         audio.addEventListener('ended', () => {
-            if (isPlaying) { audio.currentTime = 0;
-                audio.play(); }
+            if (isPlaying) {
+                audio.currentTime = 0;
+                audio.play();
+            }
         });
 
         function togglePlay() {
-            audio.paused ? audio.play() : audio.pause();
+            if (audio.paused) {
+                audio.muted = false;
+                audio.play();
+            } else {
+                audio.pause();
+            }
         }
 
-        // 5秒后自动静音播放
+        // 5秒后自动静音播放（跳过自动播放限制）
         setTimeout(() => {
             if (!musicStarted) {
                 audio.muted = true;
